@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/mBtnSendNomalNotify"
+            android:id="@+id/mBtnSendCommonNotify"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
@@ -45,8 +45,21 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:text="取消通知" />
+            android:text="取消普通通知" />
 
+        <Button
+            android:id="@+id/mBtnCancelStickNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="取消悬停通知" />
+
+        <Button
+            android:id="@+id/mBtnCancelFoldNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="取消折叠通知" />
         <Button
             android:id="@+id/mBtnCancelNotificationTag"
             android:layout_width="wrap_content"
@@ -60,14 +73,6 @@
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
             android:text="取消全部通知" />
-
-        <Button
-            android:id="@+id/mBtnNewUtil"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="NewUtil" />
-
     </LinearLayout>
 
 </ScrollView>

@@ -122,7 +122,7 @@ public class NotificationUtil {
         builder.setCustomContentView(collapsed);
         builder.setCustomBigContentView(show);
         //有设置悬停的时候需要设置，显示悬停view 不然会显示CustomBigContentView
-        builder.setCustomHeadsUpContentView(collapsed);
+        builder.setCustomHeadsUpContentView(show);
         return builder;
     }
 
@@ -160,7 +160,7 @@ public class NotificationUtil {
                  * Notification.DEFAULT_LIGHTS      //添加默认三色灯提醒
                  * Notification.DEFAULT_ALL         //添加默认以上3种全部提醒
                  */
-                .setDefaults(Notification.DEFAULT_ALL)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 //设置通知内容
                 .setContentText(content)
                 //设置通知时间，默认为系统发出通知的时间，通常可以不用设置
@@ -246,6 +246,7 @@ public class NotificationUtil {
             // 设置通知出现时不震动
 //            channel.enableVibration(false);
 //            channel.setVibrationPattern(new long[]{0});
+
             if (channel.canBypassDnd()) {
                 channel.setBypassDnd(true);
             }
@@ -253,7 +254,6 @@ public class NotificationUtil {
             if (channel.canShowBadge()) {
                 channel.setShowBadge(true);
             }
-
 
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             manager.createNotificationChannel(channel);

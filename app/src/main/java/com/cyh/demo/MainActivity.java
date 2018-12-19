@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick({R.id.mBtnSendNomalNotify, R.id.mBtnSendStickNotify, R.id.mBtnSendFoldNotify,
             R.id.mBtnSendTagNotify, R.id.mBtnCancelNotification, R.id.mBtnCancelNotificationTag,
-            R.id.mBtnCancelAll})
+            R.id.mBtnCancelAll, R.id.mBtnNewUtil})
     public void onViewClick(View v) {
         Intent skipIntent = new Intent(mActivity, MainActivity.class);
         switch (v.getId()) {
@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mBtnCancelAll:
 //                notificationId = 1;
                 NotificationUtil.with(mActivity).removeAll();
+                break;
+
+            case R.id.mBtnNewUtil:
+                startActivity(new Intent(mActivity, NotificationActivity.class));
                 break;
             default:
                 break;
