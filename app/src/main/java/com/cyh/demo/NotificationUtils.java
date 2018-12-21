@@ -3,6 +3,7 @@ package com.cyh.demo;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -159,6 +160,19 @@ public class NotificationUtils {
      * 自定义通知展开模式
      */
     private int mBigContentLayout;
+    /**
+     * 通知渠道组id
+     */
+    private String groupId;
+    /**
+     * 通知渠道组名称
+     */
+    private String groupName;
+
+    /**
+     * 通知渠道组管理
+     */
+    private NotificationChannelGroup mChannelGroup;
 
     private NotificationUtils(Context context) {
         this.mContext = context;
@@ -550,19 +564,35 @@ public class NotificationUtils {
     /**
      * 设置通知构造
      */
-    public NotificationUtils setBuild(NotificationCompat.Builder builder) {
+    public NotificationUtils setBuilder(NotificationCompat.Builder builder) {
         this.mBuilder = builder;
         return this;
     }
 
     /**
      * 设置通知渠道 Android O 新特性
-     *
+     * 如果通知渠道 channelId 一样，重新创建渠道，会使用已经被删除的通知渠道
+     * channel一旦被create出来。修改属性没有作用，可以通过删除掉。再重新create。
+     * 但是要记得要删除的channelId和要新建的channelId不能一致
      * @param notificationChannel
      */
     @TargetApi(Build.VERSION_CODES.O)
     public NotificationUtils setNotificationChannel(NotificationChannel notificationChannel) {
         this.mNotificationChannel = notificationChannel;
+        return this;
+    }
+
+    /**
+     * 删除通知渠道
+     * channel一旦被create出来。修改属性没有作用，可以通过删除掉。再重新create。
+     * 但是要记得要删除的channelId和要新建的channelId不能一致
+     * @param channelId 渠道id
+     */
+    @TargetApi(Build.VERSION_CODES.O)
+    public NotificationUtils deleteNotificationChannel(String channelId) {
+        if (TextUtil.isValidate(channelId)) {
+            mNotiManager.deleteNotificationChannel(channelId);
+        }
         return this;
     }
 
@@ -591,6 +621,38 @@ public class NotificationUtils {
 //        return this;
 //    }
 
+    /**
+     * 设置渠道组别
+     * @param channelGroup 渠道组别
+     */
+    public NotificationUtils setNotificationChannelGroup(NotificationChannelGroup channelGroup) {
+        this.mChannelGroup = channelGroup;
+        return this;
+    }
+
+    /**
+     * 设置渠道id
+     * @param groupId 组id
+     */
+    public NotificationUtils setChannelGroupId(String groupId) {
+        this.groupId = groupId;
+        return this;
+    }
+
+    /**
+     * 设置渠道组名称
+     * @param groupName 组名
+     */
+    public NotificationUtils setChannelGroupName(String groupName) {
+        this.groupName = groupName;
+        return this;
+    }
+
+    /**
+     * 设置自定义通知view回调
+     *
+     * @param listener
+     */
     public NotificationUtils setContentViewListener(ContentViewListener listener) {
         if (listener != null) {
             mListener = listener;
@@ -600,6 +662,9 @@ public class NotificationUtils {
 
     ContentViewListener mListener;
 
+    /**
+     * 自定义通知回调
+     */
     public interface ContentViewListener {
         void onContentView(RemoteViews collapsed);
 
@@ -607,8 +672,14 @@ public class NotificationUtils {
     }
 
 
+    /**
+     * 发送通知
+     *
+     * @return 1、成功发送通知 -1、发送通知失败
+     */
     public int showNotify() {
         try {
+            initChannelGroup();
             initNotificationChannel();
             NotificationCompat.Builder builder = initBuilder();
             builder = initRemoteViews(builder);
@@ -625,6 +696,31 @@ public class NotificationUtils {
         }
     }
 
+    private void initChannelGroup(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mChannelGroup != null) {
+                mNotiManager.createNotificationChannelGroup(mChannelGroup);
+            } else {
+                if (TextUtil.isValidate(groupId) && TextUtil.isValidate(groupName)) {
+                    NotificationChannelGroup group = new NotificationChannelGroup(groupId, groupName);
+                    mNotiManager.createNotificationChannelGroup(group);
+                }
+            }
+
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public NotificationUtils deleteChannelGroup(String groupId){
+        if (TextUtil.isValidate(groupId)) {
+            mNotiManager.deleteNotificationChannelGroup(groupId);
+        }
+        return this;
+    }
+
+    /**
+     * 创建自定义通知
+     */
     private NotificationCompat.Builder initRemoteViews(NotificationCompat.Builder builder) {
         try {
             RemoteViews collapsed = null;
@@ -655,6 +751,9 @@ public class NotificationUtils {
         }
     }
 
+    /**
+     * 通知构造
+     */
     private NotificationCompat.Builder initBuilder() {
 
         if (mBuilder != null) {
@@ -730,6 +829,9 @@ public class NotificationUtils {
         return builder;
     }
 
+    /**
+     * 创建通知渠道
+     */
     private void initNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (mNotificationChannel != null) {
@@ -752,6 +854,9 @@ public class NotificationUtils {
                 channel.setBypassDnd(bypassDnd);
                 channel.setShowBadge(showBadge);
                 channel.setLockscreenVisibility(mVisibility);
+                if (TextUtil.isValidate(groupId)) {
+                    channel.setGroup(groupId);
+                }
                 mNotiManager.createNotificationChannel(channel);
             }
         }
