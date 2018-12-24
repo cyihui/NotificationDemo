@@ -14,6 +14,7 @@
 # 调用
 
 1、普通通知
+```
 NotificationUtils.with(mActivity)
                 .setNotificationId(1)
                 .setContentTitle("This is Common Title")
@@ -22,8 +23,10 @@ NotificationUtils.with(mActivity)
                 .setLargeIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .showNotify();
+```
 
 2、悬停通知
+```
 String title = "This is Stick Title";
 String content = "This is Stick Content";
 Intent intent = new Intent(mActivity,  MainActivity.class);
@@ -39,9 +42,10 @@ NotificationUtils.with(mActivity)
         .setAutoCancel(true)
         .setContentIntent(pendingIntent)
         .showNotify();
-
+```
 
 3、折叠通知
+```
 String title = "This is fold Title";
 String content = "This is fold Content";
 Intent intent = new Intent(mActivity,  MainActivity.class);
@@ -70,8 +74,10 @@ NotificationUtils.with(mActivity)
         })
         .setContentIntent(pendingIntent)
         .showNotify();
+```
 
 4、tag通知
+```
 String title = "This is Tag Title";
         String content = "This is Tag Content";
         NotificationUtils.with(mActivity)
@@ -84,13 +90,19 @@ String title = "This is Tag Title";
                 .setNotificationTag(NotiTag)
                 .setAutoCancel(true)
                 .showNotify();
+```
 
 5、取消普通通知
+```
  NotificationUtils.with(mActivity).removeNotification(notificationId);
+```
 
 6、取消tag通知
+```
 NotificationUtils.with(mActivity).removeNotiWithTag(3, NotiTag);
+```
 
 7、取消全部通知
+```
 NotificationUtils.with(mActivity).removeAll();
-
+```
