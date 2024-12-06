@@ -5,24 +5,28 @@
     <!-- 闪光灯权限 -->
     <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- 振动器权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:hardwareAccelerated="true"
         android:supportsRtl="true"
+        android:name=".App"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".NotificationDemoActivity"></activity>
 
         <service android:name=".RemoveNotificationService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">

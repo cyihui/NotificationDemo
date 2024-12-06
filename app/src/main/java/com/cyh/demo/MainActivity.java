@@ -1,6 +1,7 @@
 package com.cyh.demo;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,67 +21,43 @@ public class MainActivity extends AppCompatActivity {
     String title = "This is notification title";
     String content = "This is notification content";
     String notificationTag = "notifyTag";
+    private BringToFrontReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().getDecorView().setForceDarkAllowed(false);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mActivity = this;
+        receiver = new BringToFrontReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BringToFrontReceiver.ACTION_BRING_TO_FRONT);
+        registerReceiver(receiver, intentFilter);
     }
 
 
-    @OnClick({R.id.mBtnSendNomalNotify, R.id.mBtnSendStickNotify, R.id.mBtnSendFoldNotify,
-            R.id.mBtnSendTagNotify, R.id.mBtnCancelNotification, R.id.mBtnCancelNotificationTag,
-            R.id.mBtnCancelAll, R.id.mBtnNewUtil})
+    @OnClick({R.id.mBtnNotifyDemo1, R.id.mBtnNotifyDemo2})
     public void onViewClick(View v) {
-        Intent skipIntent = new Intent(mActivity, MainActivity.class);
         switch (v.getId()) {
-            case R.id.mBtnSendNomalNotify:
-                NotificationUtil.with(mActivity).showNotification(skipIntent, notificationId,
-                        channelId, channelName, title, content, false);
-//                notificationId++;
+            case R.id.mBtnNotifyDemo1:
+                startActivity(new Intent(MainActivity.this, NotificationDemoActivity.class));
                 break;
 
 
-            case R.id.mBtnSendStickNotify:
-                NotificationUtil.with(mActivity).showNotification(skipIntent, notificationId,
-                        channelId, channelName, title, content, true);
-//                notificationId++;
+            case R.id.mBtnNotifyDemo2:
+                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
                 break;
 
-            case R.id.mBtnSendFoldNotify:
-                NotificationUtil.with(mActivity).showRemoteNotification(skipIntent, notificationId, "",
-                        channelId, channelName, title, content, true);
-//                notificationId++;
-                break;
-
-            case R.id.mBtnSendTagNotify:
-                NotificationUtil.with(mActivity).showNotification(skipIntent, notificationId, notificationTag,
-                        channelId, channelName, title, content, false);
-//                notificationId++;
-                break;
-            case R.id.mBtnCancelNotificationTag:
-//                notificationId--;
-                NotificationUtil.with(mActivity).removeNotiWithTag(notificationId, notificationTag);
-                break;
-
-            case R.id.mBtnCancelNotification:
-//                notificationId--;
-                NotificationUtil.with(mActivity).removeNotification(notificationId);
-                break;
-
-            case R.id.mBtnCancelAll:
-//                notificationId = 1;
-                NotificationUtil.with(mActivity).removeAll();
-                break;
-
-            case R.id.mBtnNewUtil:
-                startActivity(new Intent(mActivity, NotificationActivity.class));
-                break;
             default:
                 break;
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }

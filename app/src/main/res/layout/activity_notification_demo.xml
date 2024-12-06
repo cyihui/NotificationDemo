@@ -7,14 +7,13 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/mLlContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/mBtnSendCommonNotify"
+            android:id="@+id/mBtnSendNomalNotify"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
@@ -46,21 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:text="取消普通通知" />
+            android:text="取消通知" />
 
-        <Button
-            android:id="@+id/mBtnCancelStickNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="取消悬停通知" />
-
-        <Button
-            android:id="@+id/mBtnCancelFoldNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="取消折叠通知" />
         <Button
             android:id="@+id/mBtnCancelNotificationTag"
             android:layout_width="wrap_content"
@@ -74,12 +60,13 @@
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
             android:text="取消全部通知" />
+
         <Button
-            android:id="@+id/mBtnActiveNotification"
+            android:id="@+id/mBtnNewUtil"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:text="通知栏通知" />
+            android:text="NewUtil" />
 
     </LinearLayout>
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NotificationDemo</string>
+    <string name="no_read_notification_promission">没有监听通知栏的权限</string>
+    <string name="action_settings">设置</string>
 </resources>

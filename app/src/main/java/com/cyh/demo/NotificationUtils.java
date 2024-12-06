@@ -32,7 +32,7 @@ public class NotificationUtils {
     /**
      * 设置渠道名称
      */
-    private String mChannelName = "default";
+    private String mChannelName = "系统通知";
     /**
      * 通知id
      */
@@ -108,7 +108,7 @@ public class NotificationUtils {
     /**
      * 通知优先级
      */
-    private int mPriority = NotificationCompat.PRIORITY_DEFAULT;
+    private int mPriority = NotificationCompat.PRIORITY_HIGH;
 
     /**
      * 处理通知的交互事件
@@ -125,7 +125,7 @@ public class NotificationUtils {
     /**
      * 频道重要性
      */
-    private int mImportance;
+    private int mImportance = NotificationManager.IMPORTANCE_HIGH;
     /**
      * 设置音效
      */
@@ -163,11 +163,11 @@ public class NotificationUtils {
     /**
      * 通知渠道组id
      */
-    private String groupId;
+    private String groupId = "group_001";
     /**
      * 通知渠道组名称
      */
-    private String groupName;
+    private String groupName = "系统通知";
 
     /**
      * 通知渠道组管理
@@ -352,11 +352,7 @@ public class NotificationUtils {
             if (mLargeIconBitmap != null) {
                 return mLargeIconBitmap;
             } else {
-                if (mLargeIcon > 0) {
-                    return BitmapFactory.decodeResource(mContext.getResources(), mLargeIcon);
-                } else {
-                    return null;
-                }
+                return BitmapFactory.decodeResource(mContext.getResources(), mLargeIcon);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -574,6 +570,7 @@ public class NotificationUtils {
      * 如果通知渠道 channelId 一样，重新创建渠道，会使用已经被删除的通知渠道
      * channel一旦被create出来。修改属性没有作用，可以通过删除掉。再重新create。
      * 但是要记得要删除的channelId和要新建的channelId不能一致
+     *
      * @param notificationChannel
      */
     @TargetApi(Build.VERSION_CODES.O)
@@ -586,6 +583,7 @@ public class NotificationUtils {
      * 删除通知渠道
      * channel一旦被create出来。修改属性没有作用，可以通过删除掉。再重新create。
      * 但是要记得要删除的channelId和要新建的channelId不能一致
+     *
      * @param channelId 渠道id
      */
     @TargetApi(Build.VERSION_CODES.O)
@@ -623,6 +621,7 @@ public class NotificationUtils {
 
     /**
      * 设置渠道组别
+     *
      * @param channelGroup 渠道组别
      */
     public NotificationUtils setNotificationChannelGroup(NotificationChannelGroup channelGroup) {
@@ -632,6 +631,7 @@ public class NotificationUtils {
 
     /**
      * 设置渠道id
+     *
      * @param groupId 组id
      */
     public NotificationUtils setChannelGroupId(String groupId) {
@@ -641,6 +641,7 @@ public class NotificationUtils {
 
     /**
      * 设置渠道组名称
+     *
      * @param groupName 组名
      */
     public NotificationUtils setChannelGroupName(String groupName) {
@@ -696,7 +697,7 @@ public class NotificationUtils {
         }
     }
 
-    private void initChannelGroup(){
+    private void initChannelGroup() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (mChannelGroup != null) {
                 mNotiManager.createNotificationChannelGroup(mChannelGroup);
@@ -711,7 +712,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public NotificationUtils deleteChannelGroup(String groupId){
+    public NotificationUtils deleteChannelGroup(String groupId) {
         if (TextUtil.isValidate(groupId)) {
             mNotiManager.deleteNotificationChannelGroup(groupId);
         }
@@ -775,13 +776,17 @@ public class NotificationUtils {
                 builder.setSmallIcon(mSmallIcon);
             }
 
-            if (mLargeIconBitmap != null) {
-                builder.setLargeIcon(mLargeIconBitmap);
-            } else {
-                if (mLargeIcon > 0) {
-                    builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), mLargeIcon));
-                }
+            Bitmap largeIconBitmap = getLargeIconBitmap();
+            if (largeIconBitmap != null) {
+                builder.setLargeIcon(largeIconBitmap);
             }
+//            if (mLargeIconBitmap != null) {
+//                builder.setLargeIcon(mLargeIconBitmap);
+//            } else {
+//                if (mLargeIcon > 0) {
+//                    builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), mLargeIcon));
+//                }
+//            }
             if (mTimeMillis > 0) {
                 builder.setWhen(mTimeMillis);
             }
@@ -794,7 +799,6 @@ public class NotificationUtils {
                 builder.setDefaults(mNotificationDefault);
             }
 
-            builder.setVisibility(mVisibility);
 
             if (TextUtil.isValidate(vibrate)) {
                 builder.setVibrate(vibrate);
@@ -818,6 +822,10 @@ public class NotificationUtils {
                 if (mPendingIntent != null) {
                     builder.setFullScreenIntent(mPendingIntent, isHighPriority);
                 }
+            }
+
+            if (mSound != null) {
+                builder.setSound(mSound);
             }
 
 

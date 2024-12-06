@@ -13,60 +13,20 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/mBtnSendNomalNotify"
+            android:id="@+id/mBtnNotifyDemo1"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:text="普通通知" />
+            android:text="Notification Demo1" />
 
         <Button
-            android:id="@+id/mBtnSendStickNotify"
+            android:id="@+id/mBtnNotifyDemo2"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:text="悬停通知" />
+            android:text="Notification Demo2" />
 
-        <Button
-            android:id="@+id/mBtnSendFoldNotify"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="折叠通知" />
 
-        <Button
-            android:id="@+id/mBtnSendTagNotify"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="Tag通知" />
-
-        <Button
-            android:id="@+id/mBtnCancelNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="取消通知" />
-
-        <Button
-            android:id="@+id/mBtnCancelNotificationTag"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="取消Tag通知" />
-
-        <Button
-            android:id="@+id/mBtnCancelAll"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="取消全部通知" />
-
-        <Button
-            android:id="@+id/mBtnNewUtil"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="NewUtil" />
 
     </LinearLayout>
 
